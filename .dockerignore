@@ -7,4 +7,5 @@
 *.exe
 *.test
 coverage*
+.cache
 README.md

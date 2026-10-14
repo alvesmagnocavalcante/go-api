@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"encoding/json"
 	"errors"
 	"log"
@@ -12,18 +13,28 @@ import (
 	"time"
 )
 
+//go:embed web/*
+var webFiles embed.FS
+
 func newHandler() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, map[string]string{"message": "API Go funcionando"})
+		http.ServeFileFS(w, r, webFiles, "web/index.html")
 	})
+	mux.HandleFunc("GET /app.js", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFileFS(w, r, webFiles, "web/app.js")
+	})
+	mux.HandleFunc("GET /style.css", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFileFS(w, r, webFiles, "web/style.css")
+	})
+	mux.Handle("GET /api/pokemon/{name}", newPokemonHandler(&http.Client{Timeout: 8 * time.Second}, "https://pokeapi.co/api/v2/pokemon/"))
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, map[string]string{"status": "ok"})
 	})
 	return mux
 }
 
-func writeJSON(w http.ResponseWriter, data map[string]string) {
+func writeJSON(w http.ResponseWriter, data any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		log.Printf("erro ao escrever resposta: %v", err)

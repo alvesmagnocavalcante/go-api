@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokédex · Busca de Pokémon</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><span class="brand"><span class="pokeball" aria-hidden="true"></span> POKÉDEX</span><span class="tag">Explore e descubra</span></header>
+    <section class="intro">
+      <p class="eyebrow">UM UNIVERSO DE DESCOBERTAS</p>
+      <h1>Encontre seu<br><span>próximo Pokémon.</span></h1>
+      <p>Pesquise pelo nome e descubra tipos, características e atributos.</p>
+    </section>
+    <form id="search-form">
+      <label for="name">Nome do Pokémon</label>
+      <div class="search"><input id="name" name="name" placeholder="Ex.: pikachu" maxlength="100" pattern="[A-Za-z0-9]+(-[A-Za-z0-9]+)*" required autocomplete="off" spellcheck="false"><button id="submit" type="submit">Pesquisar <span aria-hidden="true">→</span></button></div>
+    </form>
+    <div class="suggestions"><span>Experimente</span><button type="button" data-name="pikachu">Pikachu</button><button type="button" data-name="bulbasaur">Bulbasaur</button><button type="button" data-name="charizard">Charizard</button></div>
+    <p id="status" role="status" aria-live="polite">Seu próximo Pokémon está a uma busca de distância.</p>
+    <article id="result" hidden>
+      <div class="portrait"><span id="number"></span><img id="sprite" alt="" width="260" height="260"><p id="no-image" hidden>Imagem indisponível</p></div>
+      <div class="details"><p class="eyebrow">POKÉMON ENCONTRADO</p><h2 id="pokemon-name"></h2><div id="types"></div><dl><div><dt>Altura</dt><dd id="height"></dd></div><div><dt>Peso</dt><dd id="weight"></dd></div></dl><h3>Atributos base</h3><div id="stats"></div></div>
+    </article>
+    <footer>Dados da <a href="https://pokeapi.co" target="_blank" rel="noopener noreferrer">PokéAPI</a><span>Feito para explorar.</span></footer>
+  </main>
+</body>
+</html>

@@ -12,7 +12,7 @@ func TestHandler(t *testing.T) {
 		name, method, path, key, value string
 		status                         int
 	}{
-		{"root", "GET", "/", "message", "API Go funcionando", http.StatusOK},
+		{"root", "GET", "/", "", "", http.StatusOK},
 		{"health", "GET", "/health", "status", "ok", http.StatusOK},
 		{"unknown route", "GET", "/missing", "", "", http.StatusNotFound},
 		{"unsupported method", "POST", "/health", "", "", http.StatusMethodNotAllowed},
